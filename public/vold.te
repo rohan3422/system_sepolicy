@@ -52,6 +52,8 @@ allow vold devpts:chr_file rw_file_perms;
 allow vold rootfs:dir mounton;
 allow vold sdcard_type:dir mounton; # TODO: deprecated in M
 allow vold sdcard_type:filesystem { mount remount unmount }; # TODO: deprecated in M
+allow vold sdcard_posix:filesystem { relabelto relabelfrom };
+allow vold labeledfs:filesystem { relabelfrom };
 allow vold sdcard_type:dir create_dir_perms; # TODO: deprecated in M
 allow vold sdcard_type:file create_file_perms; # TODO: deprecated in M
 
@@ -208,6 +210,9 @@ allow vold user_profile_data_file:dir create_dir_perms;
 
 # Raw writes to misc block device
 allow vold misc_block_device:blk_file w_file_perms;
+
+# vold might need to search or mount /mnt/vendor/*
+allow vold mnt_vendor_file:dir search;
 
 neverallow {
     domain
